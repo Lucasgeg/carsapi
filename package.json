@@ -22,5 +22,8 @@
     "morgan": "^1.10.0",
     "swagger-autogen": "^2.22.0",
     "swagger-ui-express": "^4.6.0"
+  },
+  "engines": {
+    "node": "^16"
   }
 }
