@@ -1,0 +1,304 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "3.0.0",
+    "title": "Cars API documentation",
+    "description": "Documentation of Cars API",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "contact@cars-api.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:8080/carsapi/api/v1",
+  "servers": [
+    {
+      "url": "http://localhost:8080/carsapi/api/v1/"
+    }
+  ],
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "User",
+      "description": "Endpoints"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "apiKey",
+      "name": "authorization",
+      "scheme": "bearer",
+      "bearerFormat": "JWT",
+      "in": "header"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "API endpoint to get user by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User id"
+          },
+          {
+            "name": "filters",
+            "in": "query",
+            "description": "definition of filters",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Model of user response",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "API Endpoint to add new user",
+        "parameters": [
+          {
+            "name": "newUser",
+            "in": "body",
+            "description": "User informations",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddUser"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User registered with success !!!"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Service to register a new user",
+        "description": "Service to register a new user into caraspi",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                },
+                "firstName": {
+                  "example": "any"
+                },
+                "lastName": {
+                  "example": "any"
+                },
+                "phoneNumber": {
+                  "example": "any"
+                },
+                "address": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/sign-in": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Service to sign in a user",
+        "description": "Service to sign in a user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/me": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Service to get current user",
+        "description": "Service to get current user",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Jhon Doe"
+        },
+        "age": {
+          "type": "number",
+          "example": 29
+        },
+        "parents": {
+          "type": "object",
+          "properties": {
+            "father": {
+              "type": "string",
+              "example": "Simon Doe"
+            },
+            "mother": {
+              "type": "string",
+              "example": "Marie Doe"
+            }
+          }
+        },
+        "diplomas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "school": {
+                "type": "string",
+                "example": "XYZ University"
+              },
+              "year": {
+                "type": "number",
+                "example": 2020
+              },
+              "completed": {
+                "type": "boolean",
+                "example": true
+              },
+              "internship": {
+                "type": "object",
+                "properties": {
+                  "hours": {
+                    "type": "number",
+                    "example": 290
+                  },
+                  "location": {
+                    "type": "string",
+                    "example": "XYZ Company"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "AddUser": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Jhon Doe"
+        },
+        "age": {
+          "type": "number",
+          "example": 29
+        },
+        "about": {
+          "type": "string",
+          "example": ""
+        }
+      },
+      "required": [
+        "name",
+        "age"
+      ]
+    }
+  }
+}
