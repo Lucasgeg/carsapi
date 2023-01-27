@@ -1,6 +1,8 @@
 // -- To build our rest API routes, requests and responses
 const express = require("express");
 
+let PORT = process.env.PORT || 8080;
+
 // -- To convert json to javascript object
 const bodyParser = require("body-parser");
 
@@ -38,6 +40,6 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 // -- Importing api endpoints
 require("./api-endpoints")(app);
 
-app.listen(8080, () => {
+app.listen(PORT, () => {
   console.log("Server started and listening on port 8080");
 });
